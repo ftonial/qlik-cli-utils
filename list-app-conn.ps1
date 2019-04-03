@@ -31,6 +31,7 @@ foreach ($log in Get-ChildItem -Path $logfolder -Filter *.log) {
             LogFile = $log.Name            
         }
         $apps_connections.Add($a)|Out-Null
+        $apps_connections | Write-Output
     }
     foreach ($line in Select-String -LiteralPath $log.FullName  -Pattern "LIB CONNECT TO '(.*)'" -AllMatches | %{$_.matches.groups[1].Value} | Get-Unique) {
         $a = [PSCustomObject]@{
@@ -41,6 +42,7 @@ foreach ($log in Get-ChildItem -Path $logfolder -Filter *.log) {
             LogFile = $log.Name            
         }
         $apps_connections.Add($a)|Out-Null
+        $apps_connections | Write-Output
     }
 }
 $apps_connections = $apps_connections | Sort-Object 
