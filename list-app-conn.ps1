@@ -54,7 +54,9 @@ for ($i = 0; $i -lt $apps_connections.Count; $i++) {
         try {
             $a = Get-QlikApp -id $apps_connections[$i].App
             $tmp = $a.name
+            $stream = $a.stream | Select-String -Pattern "\@{id=\w{8}-\w{4}-\w{4}-\w{4}-\w{12}; name=(.*)\;" -AllMatches | %{$_.matches.groups[1].Value} | Get-Unique
             $apps_connections[$i].AppName = $tmp
+            $apps_connections[$i].Stream = $stream
         } catch {}
     }
 }
