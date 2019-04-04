@@ -20,6 +20,7 @@ SOFTWARE.
 
 $logfolder = "C:\QlikShare\ArchivedLogs\vmqliksense\Script"
 $export_file = "C:\QlikShare\ArchivedLogs\list-app-conn.csv"
+Write-Verbose -Message "Still waiting"
 [System.Collections.ArrayList]$apps_connections = @()
 foreach ($log in Get-ChildItem -Path $logfolder -Filter *.log) {
     foreach ($line in Select-String -LiteralPath $log.FullName  -Pattern "\[lib:\/\/(.*)\/" -AllMatches | %{$_.matches.groups[1].Value} | Get-Unique) {
@@ -31,7 +32,7 @@ foreach ($log in Get-ChildItem -Path $logfolder -Filter *.log) {
             LogFile = $log.Name            
         }
         $apps_connections.Add($a)|Out-Null
-        $apps_connections.LogFile | Write-Output
+        #$apps_connections.LogFile | Write-Output
     }
     foreach ($line in Select-String -LiteralPath $log.FullName  -Pattern "LIB CONNECT TO '(.*)'" -AllMatches | %{$_.matches.groups[1].Value} | Get-Unique) {
         $a = [PSCustomObject]@{
@@ -42,7 +43,7 @@ foreach ($log in Get-ChildItem -Path $logfolder -Filter *.log) {
             LogFile = $log.Name            
         }
         $apps_connections.Add($a)|Out-Null
-        $apps_connections.LogFile | Write-Output
+        #$apps_connections.LogFile | Write-Output
     }
 }
 $apps_connections = $apps_connections | Sort-Object 
