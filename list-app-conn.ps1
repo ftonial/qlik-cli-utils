@@ -64,4 +64,5 @@ for ($i = 0; $i -lt $apps_connections.Count; $i++) {
 
 $apps_connections | Format-Table
 $apps_connections | Export-Csv -Path $export_file -Delimiter ';' -NoTypeInformation
+Write-Verbose -Message "Done"
 ## End of file
